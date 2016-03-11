@@ -54,7 +54,7 @@ To issue and process a HTTP request, the basic steps are:
 
 #### `Connection( const char* host, int port )`
  Constructor. Specifies host and port, but connection isn't made until
-request is issued or connect() is called.
+request is issued or `connect()` is called.
 
 #### `~Connection()`
 
@@ -63,14 +63,14 @@ requests will be discarded.
 
 #### `void setcallbacks( ResponseBegin_CB begincb, ResponseData_CB datacb, ResponseComplete_CB completecb, void* userdata )`
  Set up the response handling callbacks. These will be invoked during
-calls to pump().
+calls to `pump()`.
  `begincb` - called when the responses headers have been received\
  `datacb` - called repeatedly to handle body data
  `completecb` - response is completed
  `userdata` - passed as a param to all callbacks.
 
 #### `void connect()`
- Don't need to call connect() explicitly as issuing a request will call
+ Don't need to call `connect()` explicitly as issuing a request will call
 it automatically if needed. But it could block (for name lookup etc), so
 you might prefer to call it in advance.
 
