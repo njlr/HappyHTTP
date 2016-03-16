@@ -50,6 +50,48 @@ To issue and process a HTTP request, the basic steps are:
 4.  'pump' the connection at regular intervals. As responses are
     received, the callbacks will be invoked.
 
+Example
+-------
+
+For more examples, see [test.cpp](test.cpp).
+
+
+    static int count=0;
+
+    // invoked when response headers have been received
+    void OnBegin( const happyhttp::Response* r, void* userdata )
+    {
+        printf( "BEGIN (%d %s)\n", r-&gtgetstatus(), r-&gtgetreason() );
+        count = 0;
+    }
+
+    // invoked to process response body data (may be called multiple times)
+    void OnData( const happyhttp::Response* r, void* userdata, const unsigned char* data, int n )
+    {
+        fwrite( data,1,n, stdout );
+        count += n;
+    }
+
+    // invoked when response is complete
+    void OnComplete( const happyhttp::Response* r, void* userdata )
+    {
+        printf( "COMPLETE (%d bytes)\n", count );
+    }
+
+
+    void TestGET()
+    {
+        happyhttp::Connection conn( "www.scumways.com", 80 );
+        conn.setcallbacks( OnBegin, OnData, OnComplete, 0 );
+
+        conn.request( "GET", "/happyhttp/test.php" );
+
+        while( conn.outstanding() )
+            conn.pump();
+    }
+
+* * * * *
+
 ## Connection object methods
 
 ##### `Connection( const char* host, int port )`
@@ -172,50 +214,6 @@ Get the HTTP response reason string returned by the server
 
 If an error occurs, a `Wobbly` is thrown. The `Wobbly::what()` method
 returns a text description.
-
-* * * * *
-
-Example
--------
-
-For more examples, see [test.cpp](test.cpp).
-
-
-    static int count=0;
-
-    // invoked when response headers have been received
-    void OnBegin( const happyhttp::Response* r, void* userdata )
-    {
-        printf( "BEGIN (%d %s)\n", r-&gtgetstatus(), r-&gtgetreason() );
-        count = 0;
-    }
-
-    // invoked to process response body data (may be called multiple times)
-    void OnData( const happyhttp::Response* r, void* userdata, const unsigned char* data, int n )
-    {
-        fwrite( data,1,n, stdout );
-        count += n;
-    }
-
-    // invoked when response is complete
-    void OnComplete( const happyhttp::Response* r, void* userdata )
-    {
-        printf( "COMPLETE (%d bytes)\n", count );
-    }
-
-
-    void TestGET()
-    {
-        happyhttp::Connection conn( "www.scumways.com", 80 );
-        conn.setcallbacks( OnBegin, OnData, OnComplete, 0 );
-
-        conn.request( "GET", "/happyhttp/test.php" );
-
-        while( conn.outstanding() )
-            conn.pump();
-    }
-
-* * * * *
 
 TODO
 ----
