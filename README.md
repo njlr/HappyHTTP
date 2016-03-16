@@ -140,13 +140,13 @@ values.
  - `userdata` is the same value that was passed in to
  - `Connection::setcallbacks()`.
 
-`typedef void (*ResponseData_CB)( const Response* r, void* userdata, const unsigned char* data, int numbytes )`
+#### `typedef void (*ResponseData_CB)( const Response* r, void* userdata, const unsigned char* data, int numbytes )`
 
 This callback is invoked to pass out data from the body of the
 response. It may be called multiple times, or not at all (if there is no
 body).
 
-`typedef void (*ResponseComplete_CB)( const Response* r, void* userdata )`
+#### `typedef void (*ResponseComplete_CB)( const Response* r, void* userdata )`
 
 Once a response is completed, this callback is invoked. When the
 callback returns, the respsonse object will be destroyed.
@@ -156,15 +156,15 @@ callback returns, the respsonse object will be destroyed.
 When a callback is invoked, a response object is passed to it. The
 following member functions can be used to query the response:
 
-`const char* getheader( const char* name ) const`**
+#### `const char* getheader( const char* name ) const`**
 
 retrieve the value of a header (returns 0 if not present)
 
-`int getstatus() const`**
+#### `int getstatus() const`
 
 Get the HTTP status code returned by the server
 
-`const char* getreason() const`**
+#### `const char* getreason() const`
 
 Get the HTTP response reason string returned by the server
 
