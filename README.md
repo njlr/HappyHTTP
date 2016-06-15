@@ -61,7 +61,7 @@ For more examples, see [test.cpp](test.cpp).
     // invoked when response headers have been received
     void OnBegin( const happyhttp::Response* r, void* userdata )
     {
-        printf( "BEGIN (%d %s)\n", r-&gtgetstatus(), r-&gtgetreason() );
+        printf( "BEGIN (%d %s)\n", r->getstatus(), r->getreason() );
         count = 0;
     }
 
