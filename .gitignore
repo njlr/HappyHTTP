@@ -11,3 +11,10 @@
 *.lai
 *.la
 *.a
+
+# Buck
+/buck-out/
+/.buckd/
+/buckaroo/
+.buckconfig.local
+BUCKAROO_DEPS
